@@ -1,17 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Vue.js のサンプル</title>
-  <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
+    <title>Vue.js のサンプル</title>
+    <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
   <body>
+    <style>
+      .green {
+        color: green;
+      }
+      .red {
+        color: red;
+      }
+    </style>
+
     <h1>Vue3</h1>
     <div id="app">
-    <p>{{ message }}</p>
-    <p>{{ count }}</p>
-    <p>{{ user.lastName }}</p>
-    <p>{{ colors[1]}}</p>
+      <p>{{ message }}</p>
+      <p>{{ count }}</p>
+      <p>{{ user.lastName }}</p>
+      <p>{{ colors[1]}}</p>
     </div>
+
+    <div id="app2" class="container">
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>mail</th>
+            <th>tell</th>
+          </tr>
+        </thead>
+
+        <!-- 配列データを繰り返す -->
+        <template v-for="(item, index) in items" :key="index">
+          <!-- 条件分岐 -->
+          <tr v-if="index % 2 == 0" class="green">
+            <td>{{ index }}: {{ item.name }}</td>
+            <td>{{ item.mail }}</td>
+            <td>{{ item.tell }}</td>
+          </tr>
+
+          <tr v-else class="red">
+            <td>{{ index }}: {{ item.name }}</td>
+            <td>{{ item.mail }}</td>
+            <td>{{ item.tell }}</td>
+          </tr>
+        </template>
+      </table>
+    </div>
+
+    <div id="app3">
+      <button @click="onClick">ボタン</button>
+      <p>{{now}}</p>
+    </div>
+
+    <div id="app4">
+      <input type="text" v-model="message" placeholder="ここに文字を入力">
+      <p>{{message}}</p>
+      <button @click="onClick">表示</button>
+    </div>
+
     <script>
       const appdata = {
         data() {
@@ -27,7 +77,48 @@
           }
         }
       }
-      Vue.createApp(appdata).mount('#app')
+
+      const appdata2 = {
+        data() {
+          return {
+            items : [
+              { name: 'aaa', mail: 'example1', tell: '1111' },
+              { name: 'bbb', mail: 'example2', tell: '2222' },
+              { name: 'ccc', mail: 'example3', tell: '3333' },
+            ]
+          }
+        }
+      }
+
+      const appdata3 = {
+        data: () => ({
+          now: '-'
+        }),
+        methods: {
+          onClick: function(){
+            this.now =  new Date().toLocaleString('ja-JP');
+          }
+        }
+      }
+
+      const appdata4 = {
+        data() {
+          return {
+            message: ''
+          };
+        },
+        methods: {
+          onClick: function(){
+            alert(this.message);
+          }
+        }
+      }
+
+      Vue.createApp(appdata).mount('#app');
+      Vue.createApp(appdata2).mount('#app2');
+      Vue.createApp(appdata3).mount('#app3');
+      Vue.createApp(appdata4).mount('#app4');
+
     </script>
   </body>
 </html>
