@@ -23,8 +23,8 @@
             },
             methods: {
                 getRandomCatImage() {
-                    // Cat APIからランダムな猫の画像を取得 
-                    axios.get('http://localhost:30000/cat')
+                    // Cat APIからランダムな猫の画像を取得
+                    axios.get('http://localhost:30029/cat')
                         .then((response) => {
                             this.catImage = response.data[0].url;
                         })
